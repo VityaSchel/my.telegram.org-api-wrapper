@@ -4,7 +4,7 @@
   "description": "Fully typed my.telegram.org API wrapper",
   "main": "index.mjs",
   "scripts": {
-    "gendoc": "tsdoc --src=index.ts",
+    "gendoc": "tsdoc --src=index.ts --dest=API.md",
     "test": "test"
   },
   "repository": {

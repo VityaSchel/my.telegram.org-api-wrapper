@@ -75,4 +75,27 @@ true
 ## 2. Авторизоваться через MTProto как обычно
 </details>
 
-## sendCode
+<!-- TSDOC_START -->
+
+## :wrench: Constants
+
+- [errors](#gear-errors)
+
+### :gear: errors
+
+| Constant | Type |
+| ---------- | ---------- |
+| `errors` | `{ TOO_MANY_TRIES: string; }` |
+
+
+## :factory: default
+
+
+
+### Constructors
+
+`public`
+
+
+
+<!-- TSDOC_END -->
