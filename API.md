@@ -98,4 +98,45 @@ true
 
 
 
+### Methods
+
+- [sendCode](#gear-sendcode)
+- [loginWithCode](#gear-loginwithcode)
+- [obtainTokens](#gear-obtaintokens)
+
+#### :gear: sendCode
+
+Step 1/2 when logging in. Send code to the Telegram account with specified phone number.
+
+| Method | Type |
+| ---------- | ---------- |
+| `sendCode` | `(phone: string) => Promise<{ error: string; } or { error: null; random_hash: string; }>` |
+
+Parameters:
+
+* `phone`: - Phone number of account. Must start with `+` sign
+
+
+#### :gear: loginWithCode
+
+Step 2/2 when logging in. Obtain session token using random_hash from previous step and code received in Telegram.
+
+| Method | Type |
+| ---------- | ---------- |
+| `loginWithCode` | `(code: string) => Promise<{ error: string; } or { error: null; sessionToken: string; }>` |
+
+Parameters:
+
+* `code`: - Alphanumeric code from Telegram
+
+
+#### :gear: obtainTokens
+
+Scrape tokens from /apps page. Uses node-html-parser to parse HTML.
+
+| Method | Type |
+| ---------- | ---------- |
+| `obtainTokens` | `() => Promise<{ appID: string; appHash: string; }>` |
+
+
 <!-- TSDOC_END -->
