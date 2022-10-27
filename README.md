@@ -1,12 +1,10 @@
 # [my.telegram.org](https://my.telegram.org) API wrapper
 
-TypeScript supported!
-
-Tested with Jest.
+TypeScript supported! Tested with Jest!
 
 ## Features
 
-Do anything you usually do at my.telegram.org but hacker-stylish (hackerlish-like). From JS. From command line. Use it as CLI. Use it in your cron. Embed it in your paid software and tell your coworkers you made this library yourself because it's just <!-- SIZE --> 1 KB <!-- SIZE --> gzipped!!!
+Do anything you usually do at my.telegram.org but hacker-stylish (hackerlish-like). From JS. From command line. Use it as CLI. Use it in your cron. Embed it in your paid software and tell your coworkers you made this library yourself because it's just <!-- SIZE --> 863 B <!-- SIZE --> gzipped!!!
 
 ## Motivation
 
@@ -34,6 +32,10 @@ myTelegramOrg
 ### API Reference
 
 [Read API reference here](./API.md)
+
+## Tests
+
+Fill test/.env file with `PHONE` and optionally `SESSION_TOKEN`. Then run `npm test`.
 
 ## Behind the scenes
 

@@ -1,13 +1,15 @@
 {
   "name": "my.telegram.org-api-wrapper",
   "version": "1.0.0",
+  "type": "module",
   "description": "Fully typed my.telegram.org API wrapper",
-  "main": "index.mjs",
+  "main": "dist/index.mjs",
   "scripts": {
-    "gendoc": "tsdoc --src=index.ts --dest=API.md",
-    "build": "npm run build:typescript && npm run build:minify && rm index.js",
+    "gendoc": "tsdoc --src=src/index.ts --dest=API.md",
     "build:typescript": "tsc",
-    "build:minify": "uglifyjs --compress --mangle -o index.mjs -- index.js",
+    "build:minify": "uglifyjs --compress --mangle -o dist/index.mjs -- dist/index.js",
+    "build:size": "sed -i '' -E \"s/<\\!\\-\\- SIZE \\-\\-> [^<]* <\\!\\-\\- SIZE \\-\\->/<\\!\\-\\- SIZE --> $(gzip-size dist/index.mjs) <\\!\\-\\- SIZE \\-\\->/g\" README.md",
+    "build": "npm run build:typescript && npm run build:minify && rm dist/index.js && npm run build:size && npm run gendoc",
     "test": "jest"
   },
   "repository": {
@@ -29,24 +31,28 @@
     "url": "https://hloth.dev/donate"
   },
   "files": [
-    "index.mjs"
+    "dist/index.mjs"
   ],
   "homepage": "https://github.com/VityaSchel/my.telegram.org-api-wrapper#readme",
   "dependencies": {
     "cookie": "^0.5.0",
     "form-data": "^4.0.0",
-    "node-fetch": "^3.2.10",
+    "node-fetch": "^2.6.7",
     "node-html-parser": "^6.1.1",
     "set-cookie-parser": "^2.5.1"
   },
   "devDependencies": {
+    "@babel/preset-env": "^7.19.4",
     "@types/jest": "^29.2.0",
     "@types/node": "^18.11.7",
+    "@types/readline-sync": "^1.4.4",
     "@typescript-eslint/eslint-plugin": "^5.41.0",
     "@typescript-eslint/parser": "^5.41.0",
+    "babel-jest": "^29.2.2",
     "eslint": "^8.26.0",
     "gzip-size-cli": "^5.1.0",
     "jest": "^29.2.2",
+    "readline-sync": "^1.4.10",
     "ts-jest": "^29.0.3",
     "tsdoc-markdown": "^0.0.1",
     "uglify-js": "^3.17.4"

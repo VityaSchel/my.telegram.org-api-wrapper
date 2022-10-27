@@ -6,12 +6,12 @@
       "es2021"
     ],
     "moduleResolution": "node",
-    "outDir": "./",
+    "outDir": "./dist",
     "skipLibCheck": true,
     "esModuleInterop": true,
   },
   "include": [
-    "index.ts"
+    "src/index.ts"
   ],
   "exclude": [
     "node_modules",
