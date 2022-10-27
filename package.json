@@ -1,0 +1,40 @@
+{
+  "name": "my.telegram.org-api-wrapper",
+  "version": "1.0.0",
+  "description": "Fully typed my.telegram.org API wrapper",
+  "main": "index.mjs",
+  "scripts": {
+    "gendoc": "tsdoc --src=index.ts",
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VityaSchel/my.telegram.org-api-wrapper.git"
+  },
+  "keywords": [
+    "wrapper",
+    "api-wrapper",
+    "telegram-api"
+  ],
+  "author": "vityaschel <hi@hloth.dev> (https://hloth.dev/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/VityaSchel/my.telegram.org-api-wrapper/issues"
+  },
+  "funding": {
+    "type": "individual",
+    "url": "https://hloth.dev/donate"
+  },
+  "files": [
+    "index.mjs"
+  ],
+  "homepage": "https://github.com/VityaSchel/my.telegram.org-api-wrapper#readme",
+  "dependencies": {
+    "cookie": "^0.5.0",
+    "node-html-parser": "^6.1.1",
+    "set-cookie-parser": "^2.5.1"
+  },
+  "devDependencies": {
+    "tsdoc-markdown": "^0.0.1"
+  }
+}
