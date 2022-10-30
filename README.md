@@ -26,7 +26,15 @@ yarn add my.telegram.org-api-wrapper
 import MyTelegramOrg from 'my.telegram.org-api-wrapper'
 
 const myTelegramOrg = new MyTelegramOrg()
-myTelegramOrg
+await myTelegramOrg.sendCode('+79019404698')
+// Read code from user's input
+await myTelegramOrg.loginWithCode(code)
+
+const tokens = await myTelegramOrg.obtainTokens()
+console.log(
+  tokens.app.api_id,
+  tokens.app.api_hash
+)
 ```
 
 ### API Reference
