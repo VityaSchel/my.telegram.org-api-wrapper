@@ -102,7 +102,9 @@ true
 
 - [sendCode](#gear-sendcode)
 - [loginWithCode](#gear-loginwithcode)
-- [obtainTokens](#gear-obtaintokens)
+- [getSettings](#gear-getsettings)
+- [isLoggedIn](#gear-isloggedin)
+- [logout](#gear-logout)
 
 #### :gear: sendCode
 
@@ -114,7 +116,7 @@ Step 1/2 when logging in. Send code to the Telegram account with specified phone
 
 Parameters:
 
-* `phone`: - Phone number of account. Must start with `+` sign
+* `phone`: Phone number of account. Must start with `+` sign
 
 
 #### :gear: loginWithCode
@@ -123,20 +125,37 @@ Step 2/2 when logging in. Obtain session token using random_hash from previous s
 
 | Method | Type |
 | ---------- | ---------- |
-| `loginWithCode` | `(code: string) => Promise<{ error: string; } or { error: null; sessionToken: string; }>` |
+| `loginWithCode` | `(code: string, rememberMe?: boolean) => Promise<{ error: string; } or { error: null; sessionToken: string; }>` |
 
 Parameters:
 
-* `code`: - Alphanumeric code from Telegram
+* `code`: Alphanumeric code from Telegram
+* `rememberMe`: Passes "remember": 1 to form data. Sets age of cookie to 355 days, it is unknown if this flag does something else.
 
 
-#### :gear: obtainTokens
+#### :gear: getSettings
 
-Scrape tokens from /apps page. Uses node-html-parser to parse HTML.
+Scrape app settings from /apps page. Uses node-html-parser to parse HTML.
 
 | Method | Type |
 | ---------- | ---------- |
-| `obtainTokens` | `() => Promise<{ appID: string; appHash: string; }>` |
+| `getSettings` | `() => Promise<{ app: { api_id: string; api_hash: string; title: string; shortName: string; }; pushNotifications: { gcmKey: string; }; mtproto: { test: { host: string; dcID: number; publicKey: string; }; production: { ...; }; }; }>` |
+
+#### :gear: isLoggedIn
+
+Returns true if user is logged in
+
+| Method | Type |
+| ---------- | ---------- |
+| `isLoggedIn` | `() => Boolean` |
+
+#### :gear: logout
+
+Logout user from this class. Does not makes request to /auth/logout because it does not delete session
+
+| Method | Type |
+| ---------- | ---------- |
+| `logout` | `() => void` |
 
 
 <!-- TSDOC_END -->

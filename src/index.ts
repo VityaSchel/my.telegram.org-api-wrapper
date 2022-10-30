@@ -108,14 +108,16 @@ export default class MyTelegramOrg {
     }
   }> => {
     if(!this.isLoggedIn()) throw new Error('Session token not found. You must be logged in to obtain tokens.')
-    const responseRaw = await fetch('https://my.telegram.org/apps', {
-      method: 'GET',
-      headers: {
-        'Cookie': cookie.serialize('stel_token', this.sessionToken)
-      }
-    })
+    const response = await (
+      await fetch('https://my.telegram.org/apps', {
+        method: 'GET',
+        headers: {
+          'Cookie': cookie.serialize('stel_token', this.sessionToken)
+        }
+      })
+    ).text()
     
-    const root = parse(await responseRaw.text(), { blockTextElements: { pre: false } })
+    const root = parse(response)
     
     const appIDEl = root.querySelector('[for=app_id]+div > span > strong')
     if(!appIDEl) throw new Error('Unable to find app id element')
@@ -133,28 +135,29 @@ export default class MyTelegramOrg {
     if(!appGCMKeyEl) throw new Error('Unable to find GCM key element')
 
     const mtprotoBlockQuery = 'h3:contains("Available MTProto servers") + '
-    const configBlock = (test?: boolean) => `div.form-group:contains("${test ? 'Test' : 'Production'} configuration")`
-    const publicKeyBlock = ' + div.form-group pre code'
+    const configTestBlock = `div.form-group:contains("Test configuration")`
+    const configProdBlock = `${configTestBlock} + div.form-group + div.form-group`
+    const publicKeyBlock = ' + div.form-group pre'
     const hostAndDc = ' > div >'
     const host = ' span > strong'
     const dcId = ' p'
     
-    const testMtprotoHostEl = root.querySelector(`${mtprotoBlockQuery}${configBlock(true)}${hostAndDc}${host}`)
+    const testMtprotoHostEl = root.querySelector(`${mtprotoBlockQuery}${configTestBlock}${hostAndDc}${host}`)
     if(!testMtprotoHostEl) throw new Error('Unable to find mtproto test host element')
     
-    const testMtprotoDcEl = root.querySelector(`${mtprotoBlockQuery}${configBlock(true)}${hostAndDc}${dcId}`)
+    const testMtprotoDcEl = root.querySelector(`${mtprotoBlockQuery}${configTestBlock}${hostAndDc}${dcId}`)
     if(!testMtprotoDcEl) throw new Error('Unable to find mtproto test dc id element')
     
-    const testMtprotoPublicKeyEl = root.querySelector(`${mtprotoBlockQuery}${configBlock(true)}${publicKeyBlock}`)
+    const testMtprotoPublicKeyEl = root.querySelector(`${mtprotoBlockQuery}${configTestBlock}${publicKeyBlock}`)
     if(!testMtprotoPublicKeyEl) throw new Error('Unable to find mtproto test public key element')
 
-    const prodMtprotoHostEl = root.querySelector(`${mtprotoBlockQuery}${configBlock(false)}${hostAndDc}${host}`)
+    const prodMtprotoHostEl = root.querySelector(`${mtprotoBlockQuery}${configProdBlock}${hostAndDc}${host}`)
     if(!prodMtprotoHostEl) throw new Error('Unable to find mtproto prod host element')
     
-    const prodMtprotoDcEl = root.querySelector(`${mtprotoBlockQuery}${configBlock(false)}${hostAndDc}${dcId}`)
+    const prodMtprotoDcEl = root.querySelector(`${mtprotoBlockQuery}${configProdBlock}${hostAndDc}${dcId}`)
     if(!prodMtprotoDcEl) throw new Error('Unable to find mtproto prod dc id element')
     
-    const prodMtprotoPublicKeyEl = root.querySelector(`${mtprotoBlockQuery}${configBlock(false)}${publicKeyBlock}`)
+    const prodMtprotoPublicKeyEl = root.querySelector(`${mtprotoBlockQuery}${configProdBlock}${publicKeyBlock}`)
     if(!prodMtprotoPublicKeyEl) throw new Error('Unable to find mtproto production public key element')
     
     return { 
@@ -171,12 +174,12 @@ export default class MyTelegramOrg {
         test: {
           host: testMtprotoHostEl.innerText,
           dcID: Number(testMtprotoDcEl.innerText.substring(3)),
-          publicKey: testMtprotoPublicKeyEl.innerText
+          publicKey: testMtprotoPublicKeyEl.innerText.slice('<code>'.length, -'\n</code>'.length)
         },
         production: {
-          host: prodMtprotoPublicKeyEl.innerText,
+          host: prodMtprotoHostEl.innerText,
           dcID: Number(prodMtprotoDcEl.innerText.substring(3)),
-          publicKey: prodMtprotoPublicKeyEl.innerText
+          publicKey: prodMtprotoPublicKeyEl.innerText.slice('<code>'.length, -'\n</code>'.length)
         }
       }
     }

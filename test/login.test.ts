@@ -3,6 +3,7 @@ import './env'
 import { describe, expect, test } from '@jest/globals'
 import MyTelegramOrg from '../src/index'
 import readlineSync from 'readline-sync'
+import fs from 'fs'
 
 const myTelegramOrg = new MyTelegramOrg()
 
@@ -38,28 +39,28 @@ describe('Obtain tokens', () => {
   })
   test('get GCM key', async () => {
     const appSettings = await myTelegramOrg.getSettings()
-    expect(appSettings.pushNotifications.gcmKey).toBeInstanceOf(String)
+    expect(typeof appSettings.pushNotifications.gcmKey).toBe('string')
   })
   test('get MTproto configuration', async () => {
     const appSettings = await myTelegramOrg.getSettings()
-    const ipRegex = /^((25[0-5]|(2[0-4]|1\d|[1-9]|)\d)\.?\b){4}$/
+    const ipRegex = /^((25[0-5]|(2[0-4]|1\d|[1-9]|)\d)\.?\b){4}(:\d+)?$/
     expect(appSettings.mtproto.test.host).toMatch(ipRegex)
     expect(appSettings.mtproto.production.host).toMatch(ipRegex)
     
-    expect(appSettings.mtproto.test.dcID).toBeInstanceOf(Number)
+    expect(typeof appSettings.mtproto.test.dcID).toBe('number')
     expect(appSettings.mtproto.test.dcID).not.toBe(NaN)
     expect(appSettings.mtproto.test.dcID).not.toBe(Infinity)
     expect(appSettings.mtproto.test.dcID).toBeGreaterThanOrEqual(0)
 
-    expect(appSettings.mtproto.production.dcID).toBeInstanceOf(Number)
+    expect(typeof appSettings.mtproto.production.dcID).toBe('number')
     expect(appSettings.mtproto.production.dcID).not.toBe(NaN)
     expect(appSettings.mtproto.production.dcID).not.toBe(Infinity)
     expect(appSettings.mtproto.production.dcID).toBeGreaterThanOrEqual(0)
 
-    expect(appSettings.mtproto.test.publicKey).toBeInstanceOf(String)
+    expect(typeof appSettings.mtproto.test.publicKey).toBe('string')
     expect(appSettings.mtproto.test.publicKey.length).toBeGreaterThan(0)
 
-    expect(appSettings.mtproto.production.publicKey).toBeInstanceOf(String)
+    expect(typeof appSettings.mtproto.production.publicKey).toBe('string')
     expect(appSettings.mtproto.production.publicKey.length).toBeGreaterThan(0)
   })
 })

@@ -4,7 +4,7 @@ TypeScript supported! Tested with Jest!
 
 ## Features
 
-Do anything you usually do at my.telegram.org but hacker-stylish (hackerlish-like). From JS. From command line. Use it as CLI. Use it in your cron. Embed it in your paid software and tell your coworkers you made this library yourself because it's just <!-- SIZE --> 863 B <!-- SIZE --> gzipped!!!
+Do anything you usually do at my.telegram.org but hacker-stylish (hackerlish-like). From JS. From command line. Use it as CLI. Use it in your cron. Embed it in your paid software and tell your coworkers you made this library yourself because it's just <!-- SIZE --> 1.32 kB <!-- SIZE --> gzipped!!!
 
 ## Motivation
 
